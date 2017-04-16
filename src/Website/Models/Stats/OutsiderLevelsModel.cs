@@ -27,9 +27,9 @@ namespace ClickerHeroesTrackerWebsite.Models.Stats
             {
                 OutsiderData outsiderData;
                 var outsiderLevel = savedGame.OutsidersData.Outsiders.TryGetValue(outsider.Id, out outsiderData)
-                    ? outsiderData.Level
+                    ? (int)outsiderData.Level
                     : 0;
-                var outsiderLevelInfo = new OutsiderLevelInfo(outsider.Name, outsiderData.Level);
+                var outsiderLevelInfo = new OutsiderLevelInfo(outsider.Name, outsiderLevel);
                 outsiderLevels.Add(outsider.Id, outsiderLevelInfo);
             }
 

@@ -5,11 +5,12 @@
 namespace ClickerHeroesTrackerWebsite.Models.SaveData
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using System.Numerics;
     using System.Security.Cryptography;
     using System.Text;
+    using ClickerHeroesTrackerWebsite.Utility;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -42,49 +43,57 @@ namespace ClickerHeroesTrackerWebsite.Models.SaveData
         /// Gets or sets the user's titan damage.
         /// </summary>
         [JsonProperty(PropertyName = "titanDamage")]
-        public double TitanDamage { get; set; }
+        [JsonConverter(typeof(BigIntegerStringConverter))]
+        public BigInteger TitanDamage { get; set; }
 
         /// <summary>
         /// Gets or sets the total ancient souls earned
         /// </summary>
         [JsonProperty(PropertyName = "ancientSoulsTotal")]
-        public double AncientSoulsTotal { get; set; }
+        [JsonConverter(typeof(LongFloorConverter))]
+        public long AncientSoulsTotal { get; set; }
 
         /// <summary>
         /// Gets or sets the highest finished zone ever
         /// </summary>
         [JsonProperty(PropertyName = "transcendentHighestFinishedZone")]
-        public double TranscendentHighestFinishedZone { get; set; }
+        [JsonConverter(typeof(LongFloorConverter))]
+        public long TranscendentHighestFinishedZone { get; set; }
 
         /// <summary>
         /// Gets or sets the highest finished zone in this transcendence
         /// </summary>
         [JsonProperty(PropertyName = "highestFinishedZonePersist")]
-        public double HighestFinishedZonePersist { get; set; }
+        [JsonConverter(typeof(LongFloorConverter))]
+        public long HighestFinishedZonePersist { get; set; }
 
         /// <summary>
         /// Gets or sets the hero souls sacrificed in transcendence
         /// </summary>
         [JsonProperty(PropertyName = "heroSoulsSacrificed")]
-        public double HeroSoulsSacrificed { get; set; }
+        [JsonConverter(typeof(BigIntegerStringConverter))]
+        public BigInteger HeroSoulsSacrificed { get; set; }
 
         /// <summary>
         /// Gets or sets the number of rubies
         /// </summary>
         [JsonProperty(PropertyName = "rubies")]
-        public double Rubies { get; set; }
+        [JsonConverter(typeof(LongFloorConverter))]
+        public long Rubies { get; set; }
 
         /// <summary>
         /// Gets or sets the number of ascensions this transcension
         /// </summary>
         [JsonProperty(PropertyName = "numAscensionsThisTranscension")]
-        public double NumAscensionsThisTranscension { get; set; }
+        [JsonConverter(typeof(LongFloorConverter))]
+        public long NumAscensionsThisTranscension { get; set; }
 
         /// <summary>
         /// Gets or sets the number of ascensions ever
         /// </summary>
         [JsonProperty(PropertyName = "numWorldResets")]
-        public double NumWorldResets { get; set; }
+        [JsonConverter(typeof(LongFloorConverter))]
+        public long NumWorldResets { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the user has transcended yet.
@@ -108,13 +117,15 @@ namespace ClickerHeroesTrackerWebsite.Models.SaveData
         /// Gets or sets current number of souls.
         /// </summary>
         [JsonProperty(PropertyName = "heroSouls")]
-        public double HeroSouls { get; set; }
+        [JsonConverter(typeof(BigIntegerStringConverter))]
+        public BigInteger HeroSouls { get; set; }
 
         /// <summary>
         /// Gets or sets number of souls earned upon ascending.
         /// </summary>
         [JsonProperty(PropertyName = "primalSouls")]
-        public double PendingSouls { get; set; }
+        [JsonConverter(typeof(BigIntegerStringConverter))]
+        public BigInteger PendingSouls { get; set; }
 
         /// <summary>
         /// Parsed the encoded save game data to a structured object.
