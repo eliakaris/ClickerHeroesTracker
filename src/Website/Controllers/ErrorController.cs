@@ -11,12 +11,9 @@ namespace ClickerHeroesTrackerWebsite.Controllers
     /// </summary>
     public class ErrorController : Controller
     {
-        /// <summary>
-        /// The error page for the site.
-        /// </summary>
-        /// <returns>The error view</returns>
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
+            this.ViewBag.ErrorMessage = message;
             return this.View("Error");
         }
     }

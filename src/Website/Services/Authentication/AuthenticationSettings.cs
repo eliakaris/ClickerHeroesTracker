@@ -6,7 +6,7 @@ namespace ClickerHeroesTrackerWebsite.Services.Authentication
 {
     public sealed class AuthenticationSettings
     {
-        public MicrosoftAuthenticationSettings Microsoft { get; set; }
+        public OpenIdConnectAuthenticationSettings OpenIdConnect { get; set; }
 
         public FacebookAuthenticationSettings Facebook { get; set; }
 

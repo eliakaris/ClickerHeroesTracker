@@ -4,11 +4,15 @@
 
 namespace ClickerHeroesTrackerWebsite
 {
+    using System.Threading.Tasks;
+    using AspNet.Security.OpenIdConnect.Primitives;
     using ClickerHeroesTrackerWebsite.Services.Authentication;
+    using Microsoft.AspNetCore.Authentication.OpenIdConnect;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
 
     /// <summary>
     /// Configure authentication
@@ -24,15 +28,34 @@ namespace ClickerHeroesTrackerWebsite
             var authenticationSettingsOptions = app.ApplicationServices.GetService<IOptions<AuthenticationSettings>>();
             if (authenticationSettingsOptions.Value != null)
             {
-                var microsoftAuthenticationSettings = authenticationSettingsOptions.Value.Microsoft;
-                if (microsoftAuthenticationSettings != null
-                    && !string.IsNullOrEmpty(microsoftAuthenticationSettings.ClientId)
-                    && !string.IsNullOrEmpty(microsoftAuthenticationSettings.ClientSecret))
+                var openIdConnectAuthenticationSettings = authenticationSettingsOptions.Value.OpenIdConnect;
+                if (openIdConnectAuthenticationSettings != null
+                    && !string.IsNullOrEmpty(openIdConnectAuthenticationSettings.ClientId)
+                    && !string.IsNullOrEmpty(openIdConnectAuthenticationSettings.ClientSecret))
                 {
-                    app.UseMicrosoftAccountAuthentication(new MicrosoftAccountOptions
+                    app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
                     {
-                        ClientId = microsoftAuthenticationSettings.ClientId,
-                        ClientSecret = microsoftAuthenticationSettings.ClientSecret,
+                        Authority = "https://login.microsoftonline.com/common/v2.0",
+                        ClientId = openIdConnectAuthenticationSettings.ClientId,
+                        ClientSecret = openIdConnectAuthenticationSettings.ClientSecret,
+                        Events = new OpenIdConnectEvents
+                        {
+                            OnRemoteFailure = context =>
+                            {
+                                context.HandleResponse();
+                                context.Response.Redirect("/Error?message=" + context.Failure.Message);
+                                return Task.FromResult(0);
+                            },
+                        },
+                        TokenValidationParameters = new TokenValidationParameters
+                        {
+                            // Instead of using the default validation (validating against
+                            // a single issuer value, as we do in line of business apps),
+                            // we inject our own multitenant validation logic
+                            ValidateIssuer = false,
+
+                            NameClaimType = OpenIdConnectConstants.Claims.Name,
+                        },
                     });
                 }
 
