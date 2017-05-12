@@ -12,7 +12,6 @@ namespace ClickerHeroesTrackerWebsite.Controllers.Api
     using ClickerHeroesTrackerWebsite.Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http.Authentication;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
@@ -125,7 +124,7 @@ namespace ClickerHeroesTrackerWebsite.Controllers.Api
                 new AuthenticationProperties(),
                 OpenIdConnectServerDefaults.AuthenticationScheme);
 
-            ticket.SetResources("resource-server");
+            ////ticket.SetResources("resource-server");
 
             // Note: by default, claims are NOT automatically included in the access and identity tokens.
             // To allow OpenIddict to serialize them, you must attach them a destination, that specifies

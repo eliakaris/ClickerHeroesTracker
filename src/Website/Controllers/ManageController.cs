@@ -275,9 +275,9 @@ namespace ClickerHeroesTrackerWebsite.Controllers
             }
 
             var userLogins = await this.userManager.GetLoginsAsync(user);
-            var otherLogins = this.signInManager
-                .GetExternalAuthenticationSchemes()
-                .Where(auth => userLogins.All(ul => !string.Equals(auth.AuthenticationScheme, ul.LoginProvider, StringComparison.OrdinalIgnoreCase)))
+            var externalAuthenticationSchemes = await this.signInManager.GetExternalAuthenticationSchemesAsync();
+            var otherLogins = externalAuthenticationSchemes
+                .Where(auth => userLogins.All(ul => !string.Equals(auth.Name, ul.LoginProvider, StringComparison.OrdinalIgnoreCase)))
                 .ToList();
             this.ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return this.View(new ManageLoginsViewModel

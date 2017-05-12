@@ -17,11 +17,9 @@ namespace ClickerHeroesTrackerWebsite
     using ClickerHeroesTrackerWebsite.Services.ContentManagement;
     using ClickerHeroesTrackerWebsite.Services.Database;
     using ClickerHeroesTrackerWebsite.Services.Email;
-    using ClickerHeroesTrackerWebsite.Services.Instrumentation;
     using ClickerHeroesTrackerWebsite.Services.UploadProcessing;
     using Microsoft.ApplicationInsights;
     using Microsoft.ApplicationInsights.AspNetCore.Extensions;
-    using Microsoft.ApplicationInsights.Extensibility;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.DataProtection;
     using Microsoft.AspNetCore.Hosting;
@@ -129,29 +127,7 @@ namespace ClickerHeroesTrackerWebsite
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Register the OpenIddict services.
-            services.AddOpenIddict(options =>
-            {
-                // Register the Entity Framework stores.
-                options.AddEntityFrameworkCoreStores<ApplicationDbContext>();
-
-                // Register the ASP.NET Core MVC binder used by OpenIddict.
-                // Note: if you don't call this method, you won't be able to
-                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
-                options.AddMvcBinders();
-
-                // Enable the token endpoint (required to use the password flow).
-                options.EnableTokenEndpoint("/api/auth/token");
-
-                // Allow client applications to use the grant_type=password flow.
-                options.AllowPasswordFlow();
-
-                // Allow Http on devbox
-                if (this.Environment.IsDevelopment())
-                {
-                    options.DisableHttpsRequirement();
-                }
-            });
+            this.ConfigureAuthentication(services);
 
             var buildInfoProvider = new BuildInfoProvider(this.Environment);
 
@@ -194,10 +170,8 @@ namespace ClickerHeroesTrackerWebsite
             services.AddSingleton<GameData>(_ => GameData.Parse(Path.Combine(this.Environment.ContentRootPath, @"data\GameData.json")));
             services.AddSingleton<IBuildInfoProvider>(buildInfoProvider);
             services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddSingleton<IMetricProvider, MetricProvider>();
             services.AddSingleton<IOptions<PasswordHasherOptions>, PasswordHasherOptionsAccessor>();
             services.AddSingleton<IUploadScheduler, UploadScheduler>();
-            services.AddSingleton<MetricManager>(_ => new MetricManager(_.GetService<TelemetryClient>()));
 
             // Per request registrations
             services.AddScoped<IContentManager, ContentManager>();
@@ -206,7 +180,6 @@ namespace ClickerHeroesTrackerWebsite
             services.AddScoped<IUserSettingsProvider, UserSettingsProvider>();
 
             // Configuration
-            services.Configure<AuthenticationSettings>(options => this.Configuration.GetSection("Authentication").Bind(options));
             services.Configure<DatabaseSettings>(options => this.Configuration.GetSection("Database").Bind(options));
             services.Configure<EmailSenderSettings>(options => this.Configuration.GetSection("EmailSender").Bind(options));
         }
