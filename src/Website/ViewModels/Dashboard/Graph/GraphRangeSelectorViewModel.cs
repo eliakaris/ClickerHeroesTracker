@@ -6,7 +6,6 @@ namespace ClickerHeroesTrackerWebsite.Models.Dashboard.Graph
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.SqlTypes;
     using System.Linq;
 
     /// <summary>
@@ -55,12 +54,6 @@ namespace ClickerHeroesTrackerWebsite.Models.Dashboard.Graph
                     this.Start = this.End.AddMonths(-1);
                     break;
                 }
-
-                case "all":
-                {
-                    this.Start = SqlDateTime.MinValue.Value;
-                    break;
-                }
             }
         }
 
@@ -82,7 +75,7 @@ namespace ClickerHeroesTrackerWebsite.Models.Dashboard.Graph
         /// <summary>
         /// Gets the start time for the range
         /// </summary>
-        public DateTime Start { get; }
+        public DateTime? Start { get; }
 
         /// <summary>
         /// Gets the end time for the range

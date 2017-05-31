@@ -109,7 +109,7 @@ namespace ClickerHeroesTrackerWebsite
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
                     // We need to disallow '@' since we need to disambiguate between user names and email addresses during log in
-                    options.User.AllowedUserNameCharacters = options.User.AllowedUserNameCharacters.Replace("@", string.Empty);
+                    options.User.AllowedUserNameCharacters = options.User.AllowedUserNameCharacters.Replace("@", string.Empty, StringComparison.OrdinalIgnoreCase);
 
                     options.User.RequireUniqueEmail = true;
 
