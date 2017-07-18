@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26510.0
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D77FD0C8-CA68-4572-998D-F9475577CB7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6ADD8E67-6F76-4AC3-A1A6-F92F3AA664CE}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
 		NuGet.Config = NuGet.Config
 		README.md = README.md
 	EndProjectSection
@@ -30,6 +31,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "test\UnitTests\UnitTests.csproj", "{6CB42835-1C1F-46F3-B92F-C4EEF165595A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "test\IntegrationTests\IntegrationTests.csproj", "{E75BB73D-8A4A-4027-9010-06FFACD44C49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CBT", "CBT", "{553FB2FD-1798-479E-9D1C-D6BB83CB81B4}"
+	ProjectSection(SolutionItems) = preProject
+		build\CBT\build.props = build\CBT\build.props
+		build\CBT\CBT.Core.dll = build\CBT\CBT.Core.dll
+		build\CBT\CBT.Core.pdb = build\CBT\CBT.Core.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "local", "local", "{A2BD8286-2C32-41F1-89CC-BE3F01DFC7DF}"
+	ProjectSection(SolutionItems) = preProject
+		build\local\packages.config = build\local\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,5 +75,7 @@ Global
 		{EF2FDDD0-E4E0-4AEF-8CF9-3A5030FDF027} = {D77FD0C8-CA68-4572-998D-F9475577CB7E}
 		{6CB42835-1C1F-46F3-B92F-C4EEF165595A} = {320B80A0-2CE5-4F03-92AF-611FA650C435}
 		{E75BB73D-8A4A-4027-9010-06FFACD44C49} = {320B80A0-2CE5-4F03-92AF-611FA650C435}
+		{553FB2FD-1798-479E-9D1C-D6BB83CB81B4} = {3D49839D-F575-4B78-917D-05495AA9B946}
+		{A2BD8286-2C32-41F1-89CC-BE3F01DFC7DF} = {3D49839D-F575-4B78-917D-05495AA9B946}
 	EndGlobalSection
 EndGlobal
